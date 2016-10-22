@@ -1,0 +1,179 @@
+.example {
+    /* Position */
+
+    /* Sizes */
+
+    /* Block */
+
+    /*Text*/
+
+}
+
+.battleplace .block {
+    transition: ease 0.5s;
+}
+
+.block[level="1"] {
+    background-color: #709C34;
+}
+
+.block[level="2"] {
+    background-color: #FFD300;
+}
+
+.block[level="3"] {
+    background-color: #FF4900;
+}
+
+body {
+    background: #222;
+    color: #fff;
+    font-family: Lato;
+    text-align: center;
+}
+
+.container {
+    width: 1200px;
+    display: inline-block;
+}
+
+.battleplace {
+    /* Position */
+    display: inline-block;
+    padding: 10px;
+
+    /* Sizes */
+    width: 100%;
+    height: 630px;
+
+    /* Block */
+    background: #333;
+    border-radius: 3px;
+
+    /*Text*/
+    text-align: left;
+}
+
+.battleplace .block {
+    display: inline-block;
+    margin: 10px;
+
+    width: 56px;
+    height: 56px;
+
+    background: #666;
+    border-radius: 3px;
+
+    overflow: hidden;
+}
+
+
+.right {
+    /* Position */
+    display: inline-block;
+    float: right;
+    margin-bottom: 30px;
+
+    /* Sizes */
+    width: 160px;
+    height: 50px;
+
+    /* Block */
+
+    /*Text*/
+    text-align: right;
+
+}
+
+.left {
+    /* Position */
+    display: inline-block;
+    float: right;
+    margin-bottom: 30px;
+
+    /* Sizes */
+    width: auto;
+    height: 50px;
+
+    /* Block */
+
+    /*Text*/
+    text-align: left;
+
+    color: #fff;
+}
+
+.ava img {
+    float: right;
+    border-radius: 50px;
+    width: 50px;
+    margin-top: 15px;
+}
+
+
+
+.name {
+    display: inline-block;
+    float: right;
+    margin-top: 30px;
+    margin-right: 15px;
+    color: #fff;
+    width: auto;
+    text-align: left;
+}
+
+.logo {
+    float: left;
+    display: inline-block;
+    margin-top: 23px;
+    font-family: "Lato Heavy";
+    font-size: 24px;
+}
+
+.nav {
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin-top: 30px;
+    margin-left: 40px;
+}
+
+.nav li {
+    display: inline-block;
+    margin-left: 15px;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.nav li:hover {
+    opacity:1;
+}
+
+.header {
+    margin-bottom: 30px;
+}
+
+.dinamicBlock {
+    display: inline-block;
+
+    margin-top: 30px;
+
+    width:120px;
+    height:120px;
+
+    background: #555;
+    border-radius: 5px;
+
+}
+
+.dinamicBlock .block {
+    display: inline-block;
+
+    margin-top: 30px;
+
+    width: 56px;
+    height: 56px;
+
+    background: #777;
+    border-radius: 3px;
+}
