@@ -9,6 +9,10 @@
 
 }
 
+.ui-dialog {
+    background: #000;
+}
+
 .battleplace .block {
     transition: ease 0.5s;
 }
