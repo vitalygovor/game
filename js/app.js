@@ -128,6 +128,8 @@ $(document).ready(function () {
                     console.log(block2);
                     $(".dinamicBlock").html("<div class='block' element='"+elementValue+"' style='background: "+Core[elementValue].color+"'>"+elementValue+"</div>");
                 }
+            } else {
+                $(".dinamicBlock").html("<div class='block' element='"+elementValue+"' style='background: "+Core[elementValue].color+"'>"+elementValue+"</div>");
             }
         }
 
