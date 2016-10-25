@@ -199,9 +199,19 @@ $(document).ready(function () {
         }
     }
 
-    function getResults() {
+    function clearAwards(){
 
+        $(".awards").html('');
+
+        for(var name in AwardsMemory) {
+            // propertyName is what you want
+            // you can get the value like this: myObject[propertyName]
+
+            AwardsMemory[name] = 0;
+
+        }
     }
+
 
     $(".battleplace .block").droppable({
         accept: ".block",
@@ -244,6 +254,7 @@ $(document).ready(function () {
                     $(".battleplace .block").html('');
                     time = 60;
                     Results = 0;
+                    clearAwards();
                 } else {
                     location.reload();
                 }
