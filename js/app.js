@@ -2,6 +2,11 @@ $(document).ready(function () {
 
     var Results = 0;
 
+    var AwardsMemory = {
+        bank: 0,
+        building: 0
+    };
+
     var Core = {
         fire:{
             name: "fire",
@@ -35,6 +40,11 @@ $(document).ready(function () {
         building: {
             name: "building",
             color: "red",
+            awards: {
+                award1: "Award #1",
+                award2: "Award #2",
+                award3: "Award #3"
+            }
         },
         abacus: {
             name: "abacus",
@@ -46,6 +56,11 @@ $(document).ready(function () {
         bank: {
             name: "bank",
             color: "red",
+            awards: {
+                award1: "Award #1",
+                award2: "Award #2",
+                award3: "Award #3"
+            }
         },
         metal: {
             name: "metal",
@@ -120,6 +135,9 @@ $(document).ready(function () {
                 if (mainKeys.hasOwnProperty(elementValue)) {
                     block1.html("<div class='block' "+elementName+"='"+Core[mainElement].link[elementValue]+"'>"+Core[mainElement].link[elementValue]+"</div>");
 
+                    // Combo.push(Core[mainElement].link[elementValue]);
+                    AwardsMemory[Core[mainElement].link[elementValue]]++;
+
                     plusPoints();
                     createNewElement(getNewRandomElement());
 
@@ -150,10 +168,40 @@ $(document).ready(function () {
         $(".points").html(Results);
     }
 
+    function checkAwards(){
+
+        $(".awards").html('');
+
+        for(var name in AwardsMemory) {
+            // propertyName is what you want
+            // you can get the value like this: myObject[propertyName]
+
+            if((AwardsMemory[name] < 3)&&(AwardsMemory[name] > 0)) {
+                $(".awards").append("<div class='award'><h4>"+name+" = "+AwardsMemory[name]+"!</h4></div>");
+            }
+
+            if(AwardsMemory[name] == 3) {
+                $(".awards").append("<div class='award'><h4>"+name+" > 3! WOOOOW!</h4></div>");
+            }
+
+            if((AwardsMemory[name] < 6)&&(AwardsMemory[name] > 3)) {
+                $(".awards").append("<div class='award'><h4>"+name+" = "+AwardsMemory[name]+"!</h4></div>");
+            }
+
+            if(AwardsMemory[name] == 6) {
+                $(".awards").append("<div class='award'><h4>"+name+" > 6! AWESOME!</h4></div>");
+            }
+
+            if((AwardsMemory[name] < 9)&&(AwardsMemory[name] > 6)) {
+                $(".awards").append("<div class='award'><h4>"+name+" = "+AwardsMemory[name]+"!</h4></div>");
+            }
+
+        }
+    }
+
     function getResults() {
 
     }
-
 
     $(".battleplace .block").droppable({
         accept: ".block",
@@ -162,6 +210,7 @@ $(document).ready(function () {
             checkAccessBlocks($(this), ui.draggable);
             ui.draggable.hide();
             scanBlocks();
+            checkAwards();
             // createNewElement(getNewRandomElement());
             doDraggable();
 

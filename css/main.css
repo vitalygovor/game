@@ -187,3 +187,27 @@ body {
     background: #777;
     border-radius: 3px;
 }
+
+.awards {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translate(0%, -50%);
+
+    height: 360px;
+    width:200px;
+    padding: 20px;
+
+    background: #333333;
+    border-radius: 5px;
+
+    text-align: left;
+}
+
+.hide {
+    display: none;
+}
+
+.awards p {
+    margin: 0;
+}
