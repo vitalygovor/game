@@ -107,8 +107,8 @@ $(document).ready(function () {
         if($(block1).find(".block").length == 0) {
 
             block1.html("<div class='block' "+elementName+"='"+elementValue+"'>"+block2.text()+"</div>");
-
             plusPoints();
+            createNewElement(getNewRandomElement());
 
         } else {
 
@@ -121,8 +121,12 @@ $(document).ready(function () {
                     block1.html("<div class='block' "+elementName+"='"+Core[mainElement].link[elementValue]+"'>"+Core[mainElement].link[elementValue]+"</div>");
 
                     plusPoints();
+                    createNewElement(getNewRandomElement());
+
                 } else {
                     minusPoints();
+                    console.log(block2);
+                    $(".dinamicBlock").html("<div class='block' element='"+elementValue+"' style='background: "+Core[elementValue].color+"'>"+elementValue+"</div>");
                 }
             }
         }
@@ -156,7 +160,7 @@ $(document).ready(function () {
             checkAccessBlocks($(this), ui.draggable);
             ui.draggable.hide();
             scanBlocks();
-            createNewElement(getNewRandomElement());
+            // createNewElement(getNewRandomElement());
             doDraggable();
 
         }
