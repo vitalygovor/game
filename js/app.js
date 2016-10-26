@@ -66,6 +66,7 @@ $(document).ready(function () {
         // console.log($(".battleplace .block .block").length);
 
         $(".battleplace .block .block").each(function(index) {
+            $(this).attr("index",index);
             $(this).css({
                 "background-color":Core[$(this).attr("element")].color,
                 "background-image":"url('img/"+Core[$(this).attr("element")].name+".png')",
@@ -117,6 +118,37 @@ $(document).ready(function () {
                 $(ui.helper).css({
                     "box-shadow":"0px 0px 20px #777",
                 });
+            }
+        });
+
+        $(".battleplace .block .block").draggable({
+            revert: true,
+            start: function(e, ui)
+            {
+                // Delete content from last parent container
+                // ui.helper.parent().css({
+                //     "opacity":"0"
+                // });
+
+                $(ui.helper.parent()).css({
+                    // "box-shadow":"0px 0px 20px #777",
+                    "overflow": "visible",
+                    // "position":"relative",
+                    // "z-index":"1000",
+                });
+
+                $(ui.helper).css({
+                    "box-shadow":"0px 0px 20px #777",
+                    // "display":"block",
+                    "position":"relative",
+                    "z-index":"1000",
+                });
+
+            },
+            stop:function(ev,ui){
+                //if(dropped) alert(ui.item.attr("id");
+                //else alert("Not dropped");
+                ui.helper.parent().html('');
             }
         });
 
