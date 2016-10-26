@@ -10,7 +10,7 @@ $(document).ready(function () {
     var Core = {
         fire:{
             name: "fire",
-            color: "green",
+            color: "orange",
             link: {
                 metal:"gold",
                 clay: "brick"
@@ -18,7 +18,7 @@ $(document).ready(function () {
         },
         gold: {
             name: "gold",
-            color: "yellow",
+            color: "#B96E00",
             link: {
                 abacus:"bank"
             }
@@ -39,12 +39,7 @@ $(document).ready(function () {
         },
         building: {
             name: "building",
-            color: "red",
-            awards: {
-                award1: "Award #1",
-                award2: "Award #2",
-                award3: "Award #3"
-            }
+            color: "red"
         },
         abacus: {
             name: "abacus",
@@ -55,16 +50,11 @@ $(document).ready(function () {
         },
         bank: {
             name: "bank",
-            color: "red",
-            awards: {
-                award1: "Award #1",
-                award2: "Award #2",
-                award3: "Award #3"
-            }
+            color: "red"
         },
         metal: {
             name: "metal",
-            color: "black",
+            color: "white",
             link: {
                 fire:"gold"
             }
@@ -77,9 +67,13 @@ $(document).ready(function () {
 
         $(".battleplace .block .block").each(function(index) {
             $(this).css({
-                "background":Core[$(this).attr("element")].color,
+                "background-color":Core[$(this).attr("element")].color,
+                "background-image":"url('img/"+Core[$(this).attr("element")].name+".png')",
+                "background-size":"50%",
+                "background-repeat":"no-repeat",
+                "background-position":"center",
                 "margin": 0
-            })
+            });
         });
 
     }
@@ -102,15 +96,30 @@ $(document).ready(function () {
     }
 
     function createNewElement(Obj) {
-        $(".dinamicBlock").html("<div class='block' element='"+Obj.name+"' style='background: "+Obj.color+"'>"+Obj.name+"</div>");
+        $(".dinamicBlock").html("<div class='block' element='"+Obj.name+"' style='background: "+Obj.color+"'></div>");
+        $(".dinamicBlock .block").css({
+            "background-color":Obj.color,
+            "background-image":"url('img/"+Obj.name+".png')",
+            "background-size":"70%",
+            "background-repeat":"no-repeat",
+            "background-position":"center",
+        })
     }
 
     createNewElement(getNewRandomElement());
 
     function doDraggable() {
+
         $(".dinamicBlock .block").draggable({
-            revert: true
+            revert: true,
+            start: function(e, ui)
+            {
+                $(ui.helper).css({
+                    "box-shadow":"0px 0px 20px #777",
+                });
+            }
         });
+
     }
 
     function checkAccessBlocks(block1, block2){
@@ -121,7 +130,7 @@ $(document).ready(function () {
 
         if($(block1).find(".block").length == 0) {
 
-            block1.html("<div class='block' "+elementName+"='"+elementValue+"'>"+block2.text()+"</div>");
+            block1.html("<div class='block' "+elementName+"='"+elementValue+"'></div>");
             plusPoints();
             createNewElement(getNewRandomElement());
 
@@ -133,7 +142,7 @@ $(document).ready(function () {
             if (mainKeys != undefined) {
 
                 if (mainKeys.hasOwnProperty(elementValue)) {
-                    block1.html("<div class='block' "+elementName+"='"+Core[mainElement].link[elementValue]+"'>"+Core[mainElement].link[elementValue]+"</div>");
+                    block1.html("<div class='block' "+elementName+"='"+Core[mainElement].link[elementValue]+"'></div>");
 
                     // Combo.push(Core[mainElement].link[elementValue]);
                     AwardsMemory[Core[mainElement].link[elementValue]]++;
@@ -143,11 +152,25 @@ $(document).ready(function () {
 
                 } else {
                     minusPoints();
-                    console.log(block2);
-                    $(".dinamicBlock").html("<div class='block' element='"+elementValue+"' style='background: "+Core[elementValue].color+"'>"+elementValue+"</div>");
+
+                    $(".dinamicBlock").html("<div class='block' element='"+elementValue+"'></div>");
+                    $(".dinamicBlock .block").css({
+                        "background-color": Core[elementValue].color,
+                        "background-image":"url('img/"+Core[elementValue].name+".png')",
+                        "background-size":"70%",
+                        "background-repeat":"no-repeat",
+                        "background-position":"center",
+                    });
                 }
             } else {
-                $(".dinamicBlock").html("<div class='block' element='"+elementValue+"' style='background: "+Core[elementValue].color+"'>"+elementValue+"</div>");
+                $(".dinamicBlock").html("<div class='block' element='"+elementValue+"'></div>");
+                $(".dinamicBlock .block").css({
+                    "background-color": Core[elementValue].color,
+                    "background-image":"url('img/"+Core[elementValue].name+".png')",
+                    "background-size":"70%",
+                    "background-repeat":"no-repeat",
+                    "background-position":"center",
+                });
             }
         }
 
@@ -215,6 +238,7 @@ $(document).ready(function () {
 
     $(".battleplace .block").droppable({
         accept: ".block",
+        hoverClass: "ui-state-active",
         drop: function (event, ui) {
 
             checkAccessBlocks($(this), ui.draggable);
