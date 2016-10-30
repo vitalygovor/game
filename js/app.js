@@ -65,7 +65,7 @@ $(document).ready(function () {
     function scanBlocks() {
         // console.log($(".battleplace .block .block").length);
 
-        $(".battleplace .block .block").each(function(index) {
+               $(".battleplace .sector .block").each(function(index) {
             $(this).attr("index",index);
             $(this).css({
                 "background-color":Core[$(this).attr("element")].color,
@@ -97,62 +97,26 @@ $(document).ready(function () {
     }
 
     function createNewElement(Obj) {
-        $(".dinamicBlock").html("<div class='block' element='"+Obj.name+"' style='background: "+Obj.color+"'></div>");
-        $(".dinamicBlock .block").css({
-            "background-color":Obj.color,
-            "background-image":"url('img/"+Obj.name+".png')",
-            "background-size":"70%",
-            "background-repeat":"no-repeat",
-            "background-position":"center",
-        })
+
+        var newElement = $("<div />", {
+            class: "block",
+            element: Obj.name,
+            css: {
+                "background-color":Obj.color,
+                "background-image":"url('img/"+Obj.name+".png')",
+                "background-size":"70%",
+                "background-repeat":"no-repeat",
+                "background-position":"center",
+            }
+        });
+
+        $(".dinamicBlock").html(newElement);
+
     }
 
     createNewElement(getNewRandomElement());
 
-    function doDraggable() {
 
-        $(".dinamicBlock .block").draggable({
-            revert: true,
-            start: function(e, ui)
-            {
-                $(ui.helper).css({
-                    "box-shadow":"0px 0px 20px #777",
-                });
-            }
-        });
-
-        $(".battleplace .block .block").draggable({
-            revert: true,
-            start: function(e, ui)
-            {
-                // Delete content from last parent container
-                // ui.helper.parent().css({
-                //     "opacity":"0"
-                // });
-
-                $(ui.helper.parent()).css({
-                    // "box-shadow":"0px 0px 20px #777",
-                    "overflow": "visible",
-                    // "position":"relative",
-                    // "z-index":"1000",
-                });
-
-                $(ui.helper).css({
-                    "box-shadow":"0px 0px 20px #777",
-                    // "display":"block",
-                    "position":"relative",
-                    "z-index":"1000",
-                });
-
-            },
-            stop:function(ev,ui){
-                //if(dropped) alert(ui.item.attr("id");
-                //else alert("Not dropped");
-                ui.helper.parent().html('');
-            }
-        });
-
-    }
 
     function checkAccessBlocks(block1, block2){
 
@@ -162,7 +126,7 @@ $(document).ready(function () {
 
         if($(block1).find(".block").length == 0) {
 
-            block1.html("<div class='block' "+elementName+"='"+elementValue+"'></div>");
+            block1.html("<div class='block' "+elementName+"='"+elementValue+"' level='midddle'></div>");
             plusPoints();
             createNewElement(getNewRandomElement());
 
@@ -174,7 +138,7 @@ $(document).ready(function () {
             if (mainKeys != undefined) {
 
                 if (mainKeys.hasOwnProperty(elementValue)) {
-                    block1.html("<div class='block' "+elementName+"='"+Core[mainElement].link[elementValue]+"'></div>");
+                    block1.html("<div class='block' "+elementName+"='"+Core[mainElement].link[elementValue]+"' level='midddle'></div>");
 
                     // Combo.push(Core[mainElement].link[elementValue]);
                     AwardsMemory[Core[mainElement].link[elementValue]]++;
@@ -209,7 +173,6 @@ $(document).ready(function () {
         updateResults();
     }
 
-    doDraggable();
 
     function plusPoints() {
         Results += 100;
@@ -268,24 +231,8 @@ $(document).ready(function () {
     }
 
 
-    $(".battleplace .block").droppable({
-        accept: ".block",
-        hoverClass: "ui-state-active",
-        drop: function (event, ui) {
-
-            checkAccessBlocks($(this), ui.draggable);
-            ui.draggable.hide();
-            scanBlocks();
-            checkAwards();
-            // createNewElement(getNewRandomElement());
-            doDraggable();
-
-        }
-    });
-
     $(".time").hide('');
     $(".points").hide('');
-
     $(".start").click(function () {
         $(".time").show('');
         $(".points").show('');
@@ -321,6 +268,161 @@ $(document).ready(function () {
 
     });
 
+    // --------------------------------
 
+    var App = function App(block) {
+        this.dinamicArea = $(".dinamicBlock");
+        this.battleArea = $(".battleplace");
+        this.area = function area() {
+            if(block.parentBlock == this.dinamicArea) {
+                return "dinamic";
+            } else {
+                return "battle";
+            }
+        };
+        this.selectBlock = block;
+        this.parentBlock = block.parent();
+        var element = block[0].attributes.element;
+        this.propertiesOfBlock = Core[element.value];
+        this.accessBlock = this.propertiesOfBlock.link;
+    };
+
+    $( "body" ).on("mouseover", '.block' ,function() {
+
+        //  Create a new class
+        var block = new App($(this));
+        console.log("From class:");
+        console.log(block);
+
+        if(block.propertiesOfBlock.hasOwnProperty("link")){
+            doDraggable(block);
+        }
+
+        doDroppable(block);
+
+    });
+
+    function doDraggable(block) {
+
+        $(block.selectBlock).draggable({
+            revert: true,
+            zIndex: 1000,
+            start: function(e, ui)
+            {
+
+
+                $(ui.helper).css({
+                    "box-shadow":"0px 0px 20px #777",
+                    "overflow": "hidden",
+                });
+
+            }
+        });
+
+    }
+
+    function doDroppable(block) {
+
+        $(checkAllSectors(block)).droppable({
+            accept: block.selectBlock,
+            hoverClass: "ui-state-active",
+            drop: function (event, ui) {
+
+                // checkAccessBlocks($(this), ui.draggable);
+
+                var sector = $(this);
+
+                if(block.area() == 'dinamic') {
+                    console.log(block.area());
+                    // generateNewBlock(getNewRandomElement());
+                } else {
+                    console.log(block.area());
+                    block.parentBlock.html('');
+                }
+
+
+                if(sector.html().length > 0){
+
+                    var blockIntoSector = new App(sector.find('.block'));
+                    var mainKeys = Core[block.propertiesOfBlock.name].link;
+
+                    if(mainKeys.hasOwnProperty(blockIntoSector.propertiesOfBlock.name)){
+
+                        AwardsMemory[Core[block.propertiesOfBlock.name].link[blockIntoSector.propertiesOfBlock.name]]++;
+                        var newElement = $("<div />", {
+                            class: "block",
+                            element: Core[block.propertiesOfBlock.name].link[blockIntoSector.propertiesOfBlock.name]
+                        });
+
+                        sector.html(newElement);
+                    }
+                } else {
+                    dropper(block, sector);
+                }
+
+                generateNewBlock(getNewRandomElement());
+                scanBlocks();
+                checkAwards();
+                // createNewElement(getNewRandomElement());
+            }
+        });
+    }
+
+    function checkAllSectors(block) {
+
+        var DroppableSectors = [];
+
+        $(".battleplace .sector").each(function(index){
+
+            var mainKeys = Core[block.propertiesOfBlock.name].link;
+            if($(this).html().length > 0){
+                var blockIntoSector = new App($(this).find('.block'));
+                if(mainKeys.hasOwnProperty(blockIntoSector.propertiesOfBlock.name)){
+
+                    DroppableSectors.push(blockIntoSector.parentBlock);
+                }
+            } else {
+                DroppableSectors.push($(this));
+            }
+        });
+
+        return DroppableSectors;
+
+    }
+
+    function dropper(block, sector) {
+
+        var newLevel = $("<div />", {
+            class: "block",
+            element: block.propertiesOfBlock.name
+        });
+
+        sector.html(newLevel);
+
+        // Check access blocks
+
+        $(".dinamicBlock").html();
+
+        block.selectBlock.hide();
+        block.parentBlock.html('');
+
+    }
+
+    function generateNewBlock(block) {
+
+        var newElement = $("<div />", {
+            class: "block",
+            element: block.name,
+            css: {
+                "background-color": block.color,
+                "background-image":"url('img/"+block.name+".png')",
+                "background-size":"70%",
+                "background-repeat":"no-repeat",
+                "background-position":"center",
+            }
+        });
+
+        $(".dinamicBlock").html(newElement);
+    }
 
 });

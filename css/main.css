@@ -88,7 +88,7 @@ body {
     text-align: left;
 }
 
-.battleplace .block {
+.battleplace .sector {
     display: inline-block;
     margin: 10px;
 
@@ -98,6 +98,19 @@ body {
     background: #ccc;
     box-shadow: inset 0px 0px 2px #777;
 
+    border-radius: 3px;
+
+    overflow: hidden;
+}
+
+.battleplace .sector .block {
+    display: inline-block;
+    position: absolute;
+
+    width: 56px;
+    height: 56px;
+
+    background: #ccc;
     border-radius: 3px;
 
     overflow: hidden;
