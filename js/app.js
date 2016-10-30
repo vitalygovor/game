@@ -73,8 +73,9 @@ $(document).ready(function () {
     function scanBlocks() {
         // console.log($(".battleplace .block .block").length);
 
-               $(".battleplace .sector .block").each(function(index) {
+        $(".battleplace .sector .block").each(function(index) {
             $(this).attr("index",index);
+
             $(this).css({
                 "background-color":Core[$(this).attr("element")].color,
                 "background-image":"url('img/"+Core[$(this).attr("element")].name+".png')",
@@ -83,6 +84,7 @@ $(document).ready(function () {
                 "background-position":"center",
                 "margin": 0
             });
+
         });
 
     }
@@ -138,6 +140,20 @@ $(document).ready(function () {
         });
 
     }
+
+    function clearCombo() {
+        $(".battleplace .sector .block").each(function(index){
+            var block = $(this);
+            var obj = new App(block);
+            if(obj.propertiesOfBlock.link == undefined){
+                obj.selectBlock.addClass('animated fadeOutDown').delay(2000).queue(function() {
+                    obj.selectBlock.remove();
+                });;
+                // obj.selectBlock.delay('3000').remove();
+            }
+        });
+    }
+
     function checkAllSectors(block) {
 
         var DroppableSectors = [];
@@ -147,13 +163,24 @@ $(document).ready(function () {
             var mainKeys = Core[block.propertiesOfBlock.name].link;
             if($(this).html().length > 0){
                 var blockIntoSector = new App($(this).find('.block'));
-                if(mainKeys.hasOwnProperty(blockIntoSector.propertiesOfBlock.name)){
-                    DroppableSectors.push(blockIntoSector.parentBlock);
+                if(mainKeys != undefined){
+                    if(mainKeys.hasOwnProperty(blockIntoSector.propertiesOfBlock.name)){
+                        DroppableSectors.push(blockIntoSector.parentBlock);
+                    }
+                } else {
+                    // console.log("LOOOOOOOOOL");
+                    // console.log(blockIntoSector.propertiesOfBlock.name);
+                    // console.log("LOOOOOOOOOL");
+                    // if(Core[blockIntoSector.propertiesOfBlock.name].hasOwnProperty('link')){
+                    //     console.log('EGWEGAGAWEGWAEGAEGAGAEG');
+                    // }
                 }
             } else {
                 DroppableSectors.push($(this));
             }
         });
+
+        clearCombo();
 
         return DroppableSectors;
 
