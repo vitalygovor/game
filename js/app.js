@@ -17,6 +17,51 @@ $(document).ready(function () {
                 clay: "brick"
             }
         },
+        masksvark: {
+            name: "masksvark",
+            color: "white",
+            link: {
+                elektrodi:"svarkapparat",
+            }
+        },
+        zemlya: {
+            name: "zemlya",
+            color: "white",
+            link: {
+                abacus:"zem_uch",
+                water:"cvetok",
+            }
+        },
+        elektrodi: {
+            name: "elektrodi",
+            color: "white",
+            link: {
+                masksvark:"svarkapparat",
+            }
+        },
+        zem_uch: {
+            name: "zem_uch",
+            color: "white",
+        },
+        svarkapparat: {
+            name: "svarkapparat",
+            color: "white",
+            link: {
+                trubi: "vodoprov"
+            }
+        },
+        internet: {
+            name: "internet",
+            color: "white",
+        },
+        dvorec: {
+            name: "dvorec",
+            color: "white",
+        },
+        alpgora: {
+            name: "alpgora",
+            color: "white",
+        },
         gold: {
             name: "gold",
             color: "white",
@@ -24,11 +69,27 @@ $(document).ready(function () {
                 abacus:"bank"
             }
         },
+        kamen: {
+            name: "kamen",
+            color: "white",
+            link: {
+                cvetok:"alpgora"
+            }
+        },
         brick: {
             name: "brick",
             color: "white",
             link: {
-                instruments:"building"
+                instruments:"building",
+
+            }
+        },
+        cvetok: {
+            name: "cvetok",
+            color: "white",
+            link: {
+                kamen:"alpgora",
+
             }
         },
         clay: {
@@ -42,29 +103,140 @@ $(document).ready(function () {
             name: "instruments",
             color: "white",
             link: {
-                brick:"building"
+                brick:"building",
+                building: "dvorec",
+                derevo: "abacus",
+                auto: "sportcar"
+            }
+        },
+        derevo: {
+            name: "derevo",
+            color: "white",
+            link: {
+                metal:"stolb",
+                instruments: "abacus"
             }
         },
         building: {
             name: "building",
-            color: "white"
+            color: "white",
+            link: {
+                instruments:"dvorec"
+            }
         },
         abacus: {
             name: "abacus",
             color: "white",
             link: {
-                gold: "bank"
+                gold: "bank",
+                energy: "komp",
+                zemlya: "zem_uch"
             }
         },
         bank: {
             name: "bank",
             color: "white"
         },
+        elektroline: {
+            name: "elektroline",
+            color: "white"
+        },
+        fonar: {
+            name: "fonar",
+            color: "white"
+        },
+        komp: {
+            name: "komp",
+            color: "white",
+            link:{
+                provod: "internet"
+            }
+        },
+        vodoprov: {
+            name: "vodoprov",
+            color: "white",
+            link: {
+                water: "fontan"
+            }
+        },
+        fontan: {
+            name: "fontan",
+            color: "white"
+        },
+        sportcar: {
+            name: "sportcar",
+            color: "white"
+        },
+        water: {
+            name: "water",
+            color: "white",
+            link: {
+                vodoprov: "fontan"
+            }
+        },
+        resina: {
+            name: "resina",
+            color: "white",
+            link: {
+                metal: "koleso"
+            }
+        },
+        koleso: {
+            name: "koleso",
+            color: "white",
+            link: {
+                metal: "auto"
+            }
+        },
+        auto: {
+            name: "auto",
+            color: "white",
+            link: {
+                instruments: "sportcar"
+            }
+        },
         metal: {
             name: "metal",
             color: "white",
             link: {
-                fire:"gold"
+                energy: "provod",
+                fire:"gold",
+                derevo: "stolb",
+                instruments: "trubi",
+                resina: "koleso",
+                koleso: "auto"
+            }
+        },
+        provod: {
+            name: "provod",
+            color: "white",
+            link: {
+                stolb: "elektroline",
+                komp: "internet"
+            }
+        },
+        trubi: {
+            name: "trubi",
+            color: "white",
+            link: {
+                svarkapparat: "vodoprov"
+            }
+        },
+        energy: {
+            name: "energy",
+            color: "white",
+            link: {
+                metal: "provod",
+                abacus: "komp",
+                stolb: "fonar"
+            }
+        },
+        stolb: {
+            name: "stolb",
+            color: "white",
+            link: {
+                provod:"elektroline",
+                energy:"fonar"
             }
         }
     }
